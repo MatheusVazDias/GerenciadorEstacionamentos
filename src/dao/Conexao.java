@@ -17,7 +17,7 @@ public class Conexao {
      * muda-se somente o nome do banco
      */
     private static final String banco = 
-            "jdbc:postgresql://localhost:5432/Banco_estacionamento";
+            "jdbc:postgresql://localhost:5433/GerenciadorEstacionamentos";
     /**
      * O atributo driver representa a classe do Driver JDBC que será usada na 
      * conexão. Quando se utiliza outros bancos usa-se a classe apropriada a 
@@ -49,8 +49,7 @@ public class Conexao {
                 Class.forName(driver);
                 // criação da conexão com o BD
                 con = 
-                DriverManager.getConnection(
-                        banco, usuario, senha);
+                DriverManager.getConnection(banco, usuario, senha);
             } catch (ClassNotFoundException ex) {
                 System.out.println("Não encontrou o driver");
             } catch (SQLException ex) {

@@ -5,9 +5,7 @@
  */
 package gerenciador;
 
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +17,10 @@ public class Inicial extends javax.swing.JFrame {
      * Creates new form Inicial
      */
     public Inicial() {
+        
+        //Altera o icone no topo da janela
+        
+        this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
         initComponents();
     }
 
@@ -36,12 +38,15 @@ public class Inicial extends javax.swing.JFrame {
         Btn_TelaAutos = new javax.swing.JButton();
         Btn_TelaVagas = new javax.swing.JButton();
         Btn_TelaNotaF1 = new javax.swing.JButton();
+        Btn_TelaLocacao = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PROParking - Início");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Início", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Klavika Regular", 1, 36))); // NOI18N
         jPanel1.setToolTipText("");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Btn_TelaCliente.setText("Tela Cliente");
         Btn_TelaCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -49,13 +54,15 @@ public class Inicial extends javax.swing.JFrame {
                 Btn_TelaClienteActionPerformed(evt);
             }
         });
+        jPanel1.add(Btn_TelaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 129, 42));
 
-        Btn_TelaAutos.setText("Tela Automóveis");
+        Btn_TelaAutos.setText("Tela veículos");
         Btn_TelaAutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_TelaAutosActionPerformed(evt);
             }
         });
+        jPanel1.add(Btn_TelaAutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 120, 42));
 
         Btn_TelaVagas.setText("Tela Vagas");
         Btn_TelaVagas.addActionListener(new java.awt.event.ActionListener() {
@@ -63,6 +70,7 @@ public class Inicial extends javax.swing.JFrame {
                 Btn_TelaVagasActionPerformed(evt);
             }
         });
+        jPanel1.add(Btn_TelaVagas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 129, 42));
 
         Btn_TelaNotaF1.setText("Tela Nota Fiscal");
         Btn_TelaNotaF1.addActionListener(new java.awt.event.ActionListener() {
@@ -70,52 +78,36 @@ public class Inicial extends javax.swing.JFrame {
                 Btn_TelaNotaF1ActionPerformed(evt);
             }
         });
+        jPanel1.add(Btn_TelaNotaF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 129, 42));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_TelaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_TelaAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_TelaNotaF1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_TelaVagas, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_TelaAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_TelaNotaF1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_TelaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_TelaVagas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        Btn_TelaLocacao.setText("Tela Locação");
+        Btn_TelaLocacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_TelaLocacaoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Btn_TelaLocacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 129, 42));
+
+        jLabel2.setFont(new java.awt.Font("DialogInput", 3, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel2.setText("Início");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_TelaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_TelaClienteActionPerformed
@@ -143,6 +135,14 @@ public class Inicial extends javax.swing.JFrame {
     private void Btn_TelaNotaF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_TelaNotaF1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Btn_TelaNotaF1ActionPerformed
+
+    private void Btn_TelaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_TelaLocacaoActionPerformed
+        // TODO add your handling code here:
+        LocacaoTela locacaotela;
+        locacaotela = new LocacaoTela();
+        locacaotela.setVisible(true);
+        locacaotela.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_Btn_TelaLocacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,8 +182,10 @@ public class Inicial extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_TelaAutos;
     private javax.swing.JButton Btn_TelaCliente;
+    private javax.swing.JButton Btn_TelaLocacao;
     private javax.swing.JButton Btn_TelaNotaF1;
     private javax.swing.JButton Btn_TelaVagas;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
