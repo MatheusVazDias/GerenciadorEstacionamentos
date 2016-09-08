@@ -18,6 +18,7 @@ public class ClienteDAO {
     public Boolean inserir (Cliente cliente)
     {
         Boolean retorno;
+        List <Cliente> lista = new ArrayList<Cliente>();
         //Monta o sql de insert da tabela
         String sql = "INSERT INTO cliente(cpf, nome, rg, telefone, bonusacumulado)" + "VALUES (?, ?, ?, ?, 0.0)";
         
@@ -48,19 +49,20 @@ public class ClienteDAO {
     public List<Cliente> listar()
     {
         List <Cliente> lista = new ArrayList<Cliente>();
-        String sql = "SELECT * FROM cliente WHERE cpf =";
+        String sql = "SELECT * FROM cliente";
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
                       
         try 
         { 
             //Executo o sql e jogo em um resultset
-           
-            ResultSet res = pst.executeQuery();
+           ResultSet res = pst.executeQuery();
             //Enquanto tiver registro eu vou relacionar com minha classe Jogador e adicionar na lista
             while (res.next())
             {
+                
                 Cliente cliente = new Cliente();
-                cliente.setBonusacumulado(res.getDouble("bonus"));
+                
+                //cliente.setBonusacumulado(res.getDouble("bonus"));
                 cliente.setCpf(res.getString("cpf"));
                 cliente.setId(res.getInt("id"));
                 cliente.setNome(res.getString("nome"));

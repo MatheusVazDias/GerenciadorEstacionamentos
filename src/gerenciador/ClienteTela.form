@@ -212,9 +212,6 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_Bonus">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_BonusActionPerformed"/>
           </Events>

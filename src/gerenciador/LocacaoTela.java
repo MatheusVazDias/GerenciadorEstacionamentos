@@ -7,6 +7,7 @@ package gerenciador;
 
 import dao.LocacaoDAO;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Locacao;
@@ -21,12 +22,30 @@ public class LocacaoTela extends javax.swing.JFrame {
     /**
      * Creates new form LocacaoTela
      */
+    
+        private List<Locacao> lista;
+        Integer posicao; 
+        
+ 
+        
+        public void Limpar ()
+    {
+        txt_Cpf.setText("");
+        txt_Entrada.setText("");
+        txt_Id.setText("");
+        txt_Saida.setText("");
+        txt_Vaga.setText("");
+    }
+
     public LocacaoTela() {
         
         //Altera o icone no topo da janela
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
         
         initComponents();
+        
+        LocacaoDAO dao = new LocacaoDAO();
+        lista = dao.listar();
     }
 
     /**
@@ -62,37 +81,32 @@ public class LocacaoTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(542, 202));
         jPanel1.setRequestFocusEnabled(false);
-        jPanel1.setLayout(null);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("ID:");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(10, 27, 53, 28);
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 53, 28));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText("CPF:");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(10, 73, 53, 28);
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 53, 28));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Saída:");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 119, 53, 28);
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 53, 28));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Vaga:");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(410, 30, 53, 30);
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 53, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel6.setText("Entrada");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(410, 80, 61, 30);
+        jLabel6.setText("Entrada:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 80, 30));
 
         txt_Id.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txt_Id.addActionListener(new java.awt.event.ActionListener() {
@@ -100,16 +114,17 @@ public class LocacaoTela extends javax.swing.JFrame {
                 txt_IdActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_Id);
-        txt_Id.setBounds(89, 34, 156, 20);
-        jPanel1.add(txt_Saida);
-        txt_Saida.setBounds(89, 126, 156, 20);
-        jPanel1.add(txt_Vaga);
-        txt_Vaga.setBounds(480, 40, 156, 20);
-        jPanel1.add(txt_Cpf);
-        txt_Cpf.setBounds(89, 80, 156, 20);
-        jPanel1.add(txt_Entrada);
-        txt_Entrada.setBounds(480, 80, 156, 20);
+        jPanel1.add(txt_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 156, -1));
+        jPanel1.add(txt_Saida, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 156, -1));
+        jPanel1.add(txt_Vaga, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 156, -1));
+        jPanel1.add(txt_Cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 156, -1));
+
+        txt_Entrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_EntradaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_Entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 156, -1));
 
         BtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/aceitar.png"))); // NOI18N
         BtnSalvar.setContentAreaFilled(false);
@@ -118,8 +133,7 @@ public class LocacaoTela extends javax.swing.JFrame {
                 BtnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSalvar);
-        BtnSalvar.setBounds(200, 250, 66, 62);
+        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 66, 62));
 
         BtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pesquisar.png"))); // NOI18N
         BtnPesquisar.setContentAreaFilled(false);
@@ -128,24 +142,26 @@ public class LocacaoTela extends javax.swing.JFrame {
                 BtnPesquisarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnPesquisar);
-        BtnPesquisar.setBounds(290, 250, 70, 62);
+        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 70, 62));
 
         BtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir.png"))); // NOI18N
         BtnExcluir.setBorderPainted(false);
         BtnExcluir.setContentAreaFilled(false);
-        jPanel1.add(BtnExcluir);
-        BtnExcluir.setBounds(380, 250, 67, 65);
+        BtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnExcluirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 67, 65));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/148250_Queue_Assist-1024x576.jpg"))); // NOI18N
-        jPanel1.add(fundo);
-        fundo.setBounds(-170, 0, 1090, 576);
+        jPanel1.add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-170, 0, 1090, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +175,34 @@ public class LocacaoTela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
-        // TODO add your handling code here:
+        
+        
+                
+            
+Boolean encontrou = false;
+        Integer posicaoachou = 0;
+
+        for (Locacao lista1 : lista)
+        {
+            if (txt_Cpf.getText().equals(lista1.getCpf()))
+            {
+                encontrou = true;
+
+                txt_Vaga.setText(lista1.getVaga().toString());
+                txt_Entrada.setText(lista1.getEntrada().toString());
+                txt_Id.setText(lista1.getId().toString());
+                txt_Saida.setText(lista1.getSaida().toString());
+                break;
+            }
+ 
+        }
+
+        if (encontrou == false)
+        {
+            JOptionPane.showMessageDialog(null, "Locação ainda não cadastrada!");
+        }
+            
+        
     }//GEN-LAST:event_BtnPesquisarActionPerformed
 
     private void BtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalvarActionPerformed
@@ -174,10 +217,7 @@ public class LocacaoTela extends javax.swing.JFrame {
             }
             else
             {
-                //                cliente.setCpf(txt_Id.getText());
-                //                cliente.setRg(txt_Cpf.getText());
-                //                cliente.setTelefone(txt_Saida.getText());
-                //                cliente.setNome(txt_Vaga.getText());
+                
                 Timestamp Entrada = new Timestamp(System.currentTimeMillis());
                 locacao.setCpf(txt_Cpf.getText());
                 locacao.setVaga(Integer.parseInt(txt_Vaga.getText()));
@@ -212,6 +252,37 @@ public class LocacaoTela extends javax.swing.JFrame {
     private void txt_IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_IdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_IdActionPerformed
+
+    private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
+        if (txt_Cpf.getText().isEmpty()==false)
+        {      
+            //instanciando a classe de acesso a dados JogadorDAO       
+            LocacaoDAO dao = new LocacaoDAO();
+            
+            //chamo o inserir
+            boolean deucerto = dao.remover(lista.get(posicao));
+            
+            if (deucerto == true)
+            {
+                JOptionPane.showMessageDialog(rootPane,"Excluído com sucesso!\n Campos de texto foram limpos!");
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(rootPane,"Erro ao excluir!");
+            }
+            lista = dao.listar();
+            Limpar();
+        }
+        
+        else
+        {
+            
+        }
+    }//GEN-LAST:event_BtnExcluirActionPerformed
+
+    private void txt_EntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_EntradaActionPerformed
 
     /**
      * @param args the command line arguments

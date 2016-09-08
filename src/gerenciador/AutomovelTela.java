@@ -7,6 +7,7 @@ package gerenciador;
 
 import javax.swing.JOptionPane;
 import dao.AutomovelDAO;
+import java.util.List;
 import javax.swing.ImageIcon;
 import modelo.Automovel;
 /**
@@ -18,12 +19,29 @@ public class AutomovelTela extends javax.swing.JFrame {
     /**
      * Creates new form Automovel
      */
+        private List<Automovel> lista;
+        Integer posicao; 
+        
+        public void Limpar ()
+    {
+        txt_Ano.setText("");
+        txt_Cor.setText("");
+        txt_Cpf.setText("");
+        txt_Id.setText("");
+        txt_Modelo.setText("");
+        txt_Placa.setText("");
+    }
+        
     public AutomovelTela() {
         
         //Altera o icone no topo da janela
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
         
         initComponents();
+        
+        AutomovelDAO dao = new AutomovelDAO();
+        lista = dao.listar();
+        posicao = 0;
     }
 
     /**
@@ -59,29 +77,35 @@ public class AutomovelTela extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BtnExcluir.setText("Excluir");
+        BtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir.png"))); // NOI18N
+        BtnExcluir.setBorderPainted(false);
+        BtnExcluir.setContentAreaFilled(false);
         BtnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnExcluirActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 123, 34));
+        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 80, 70));
 
-        BtnPesquisar.setText("Pesquisar");
+        BtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pesquisar.png"))); // NOI18N
+        BtnPesquisar.setBorderPainted(false);
+        BtnPesquisar.setContentAreaFilled(false);
         BtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnPesquisarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 123, 34));
+        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 70, 70));
 
-        BtnSalvar.setText("Salvar");
+        BtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/aceitar.png"))); // NOI18N
+        BtnSalvar.setBorderPainted(false);
+        BtnSalvar.setContentAreaFilled(false);
         BtnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 123, 34));
+        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 80, 70));
 
         jLabel1.setFont(new java.awt.Font("Klavika Regular", 0, 18)); // NOI18N
         jLabel1.setText("CPF:");
@@ -184,11 +208,70 @@ public class AutomovelTela extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnSalvarActionPerformed
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnPesquisarActionPerformed
+        
+        
+Boolean encontrou = false;
+        Integer posicaoachou = 0;
+        
+        if(posicaoachou >= 2){
+            JOptionPane.showMessageDialog(null, "Encontei mais de um veículo, deseja visualizar em uma nova janela?");
+        }
+        
+        for (Automovel lista1 : lista)
+        {
+            if (txt_Cpf.getText().equals(lista1.getCpf()))
+            {
+                encontrou = true;
+                
+                
+                
+                JOptionPane.showMessageDialog(null, "Exibindo automóvel, um momento!");
+                
+                txt_Placa.setText(lista1.getPlaca());
+                txt_Modelo.setText(lista1.getModelo());
+                txt_Cor.setText(lista1.getCor());
+                txt_Ano.setText(lista1.getAno().toString());
+                txt_Ano.setText(lista1.getAno().toString());
+                txt_Id.setText(lista1.getId().toString());
+                
+                
+                break;
+            }
+ 
+        }
 
+        if (encontrou == false)
+        {
+            JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
+        }
+        
+    }//GEN-LAST:event_BtnPesquisarActionPerformed
+    
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
-        // TODO add your handling code here:
+        if (txt_Cpf.getText().isEmpty()==false)
+        {      
+            //instanciando a classe de acesso a dados JogadorDAO       
+            AutomovelDAO dao = new AutomovelDAO();
+            
+            //chamo o inserir
+            boolean deucerto = dao.remover(lista.get(posicao));
+            
+            if (deucerto == true)
+            {
+                JOptionPane.showMessageDialog(rootPane,"Excluído com sucesso!");
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(rootPane,"Erro ao excluir!");
+            }
+            lista = dao.listar();
+            Limpar();
+        }
+        
+        else
+        {
+            
+        }
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
     /**

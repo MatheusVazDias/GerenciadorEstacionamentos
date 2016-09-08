@@ -24,6 +24,7 @@ import modelo.Locacao;
 public class LocacaoDAO {
     Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
      public Boolean inserir (Locacao locacao)
+     
     {
         Boolean retorno;
         //Monta o sql de insert da tabela
@@ -56,7 +57,8 @@ public class LocacaoDAO {
         return retorno;
     }
     
-    public List<Locacao> listar()
+    //public List<Locacao> listar()
+            public List<Locacao> listar()
     {
         List <Locacao> lista = new ArrayList<Locacao>();
         String sql = "SELECT * FROM locacao";
@@ -70,9 +72,7 @@ public class LocacaoDAO {
             while (res.next())
             {
                 Locacao locacao = new Locacao();
-                //automovel.setLogin(res.getString("login"));
-                //automovel.setSenha(res.getString("senha"));
-                //automovel.setEmail(res.getString("email"));
+                
                 locacao.setCpf(res.getString("cpf"));
                 locacao.setVaga(res.getInt("vaga"));
                 locacao.setId(res.getInt("id"));

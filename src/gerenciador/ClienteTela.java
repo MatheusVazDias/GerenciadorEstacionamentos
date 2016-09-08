@@ -10,6 +10,7 @@ import dao.ClienteDAO;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -23,13 +24,28 @@ public class ClienteTela extends javax.swing.JFrame {
     /**
      * Creates new form Automovel
      */
-    
+        private List<Cliente> lista;
+        Integer posicao;
+        
+        public void Limpar ()
+    {
+        txt_Cpf.setText("");
+        txt_Bonus.setText("");
+        txt_Id.setText("");
+        txt_Nome.setText("");
+        txt_Rg.setText("");
+        txt_Telefone.setText("");
+    }
     public ClienteTela() {
         
         //Altera o icone no topo da janela
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
         
         initComponents();
+        ClienteDAO dao = new ClienteDAO();
+        lista = dao.listar();
+        
+        posicao = 0;        
     }
 
     /**
@@ -128,7 +144,6 @@ public class ClienteTela extends javax.swing.JFrame {
         jPanel1.add(txt_Nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 155, -1));
         jPanel1.add(txt_Rg, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 114, 155, -1));
 
-        txt_Bonus.setEditable(false);
         txt_Bonus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_BonusActionPerformed(evt);
@@ -212,9 +227,33 @@ public class ClienteTela extends javax.swing.JFrame {
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
 
+        Boolean encontrou = false;
+        Integer posicaoachou = 0;
+
+        for (Cliente lista1 : lista)
+        {
+            if (txt_Cpf.getText().equals(lista1.getCpf()))
+            {
+                encontrou = true;
+
+                txt_Nome.setText(lista1.getNome());
+                txt_Rg.setText(lista1.getRg());
+                txt_Telefone.setText(lista1.getTelefone());
+                txt_Id.setText(lista1.getId().toString());
+                //Testa se o cliente contem algum valor acumulado no bonus e se tiver, ele exibe
+                if (lista1.getBonusacumulado() != null){
+                    txt_Bonus.setText(lista1.getBonusacumulado().toString());
+                }
+                 break;
+            }
+ 
+        }
+
+        if (encontrou == false)
+        {
+            JOptionPane.showMessageDialog(null, "Cliente ainda não cadastrado!");
+        }
          
-        
-        
     }//GEN-LAST:event_BtnPesquisarActionPerformed
 
     private void txt_BonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_BonusActionPerformed
@@ -226,7 +265,30 @@ public class ClienteTela extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_IdActionPerformed
 
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
-        // TODO add your handling code here:
+        if (txt_Cpf.getText().isEmpty()==false)
+        {      
+            //instanciando a classe de acesso a dados JogadorDAO       
+            ClienteDAO dao = new ClienteDAO();
+            
+            //chamo o inserir
+            boolean deucerto = dao.remover(lista.get(posicao));
+            
+            if (deucerto == true)
+            {
+                JOptionPane.showMessageDialog(rootPane,"Excluído com sucesso!");
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(rootPane,"Erro ao excluir!");
+            }
+            lista = dao.listar();
+            Limpar();
+        }
+        
+        else
+        {
+            
+        }
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
     /**

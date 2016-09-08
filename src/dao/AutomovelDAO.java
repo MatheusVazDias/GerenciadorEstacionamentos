@@ -67,9 +67,6 @@ public class AutomovelDAO {
             while (res.next())
             {
                 Automovel automovel = new Automovel();
-                //automovel.setLogin(res.getString("login"));
-                //automovel.setSenha(res.getString("senha"));
-                //automovel.setEmail(res.getString("email"));
                 automovel.setPlaca(res.getString("placa"));
                 automovel.setCpf(res.getString("cpf"));
                 automovel.setModelo(res.getString("modelo"));
