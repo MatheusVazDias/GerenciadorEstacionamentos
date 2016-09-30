@@ -61,6 +61,7 @@ public class ClienteTela extends javax.swing.JFrame {
         BtnExcluir = new javax.swing.JButton();
         BtnPesquisar = new javax.swing.JButton();
         BtnSalvar = new javax.swing.JButton();
+        BtnLimpar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -89,7 +90,7 @@ public class ClienteTela extends javax.swing.JFrame {
                 BtnExcluirActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 70, 70));
+        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 70, 70));
 
         BtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pesquisar.png"))); // NOI18N
         BtnPesquisar.setContentAreaFilled(false);
@@ -98,7 +99,7 @@ public class ClienteTela extends javax.swing.JFrame {
                 BtnPesquisarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 70, 70));
+        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 70, 70));
 
         BtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/aceitar.png"))); // NOI18N
         BtnSalvar.setContentAreaFilled(false);
@@ -107,7 +108,18 @@ public class ClienteTela extends javax.swing.JFrame {
                 BtnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 70, 70));
+        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 70, 70));
+
+        BtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/novo.png"))); // NOI18N
+        BtnLimpar.setToolTipText("");
+        BtnLimpar.setBorderPainted(false);
+        BtnLimpar.setContentAreaFilled(false);
+        BtnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimparActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 80, 70));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("CPF:");
@@ -291,6 +303,11 @@ public class ClienteTela extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
+    private void BtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimparActionPerformed
+        Limpar();
+        JOptionPane.showMessageDialog(rootPane, "A tela foi limpa com sucesso!"); 
+    }//GEN-LAST:event_BtnLimparActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -336,6 +353,7 @@ public class ClienteTela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnExcluir;
+    private javax.swing.JButton BtnLimpar;
     private javax.swing.JButton BtnPesquisar;
     private javax.swing.JButton BtnSalvar;
     private javax.swing.JLabel fundo;

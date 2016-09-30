@@ -13,10 +13,12 @@ import java.sql.Timestamp;
  */
 public class Locacao {
     private String cpf;
+    private String placa;
     private Integer vaga;
     private Integer id; 
     private Timestamp entrada;
     private Timestamp saida;
+   
 
     public String getCpf() {
         return cpf;
@@ -56,5 +58,13 @@ public class Locacao {
 
     public void setSaida(Timestamp saida) {
         this.saida = saida;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 }

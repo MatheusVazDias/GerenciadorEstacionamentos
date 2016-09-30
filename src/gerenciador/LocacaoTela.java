@@ -24,6 +24,8 @@ public class LocacaoTela extends javax.swing.JFrame {
      */
     
         private List<Locacao> lista;
+        private List<Locacao> lista2;
+        
         Integer posicao; 
         
  
@@ -35,17 +37,30 @@ public class LocacaoTela extends javax.swing.JFrame {
         txt_Id.setText("");
         txt_Saida.setText("");
         txt_Vaga.setText("");
+        txt_Placa.setText("");
+    }
+        
+          public void Atualizar() {
+        LocacaoDAO dao = new LocacaoDAO();
+
+        lista = dao.listar();
+        lista2 = dao.listar();
+        posicao = 0;
     }
 
     public LocacaoTela() {
         
         //Altera o icone no topo da janela
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
-        
+        String id = null;
         initComponents();
         
         LocacaoDAO dao = new LocacaoDAO();
-        lista = dao.listar();
+            String cpf = null;
+           
+            
+            lista = dao.listarporcpf(cpf);
+            lista2 = dao.listarporid(WIDTH);
     }
 
     /**
@@ -71,7 +86,13 @@ public class LocacaoTela extends javax.swing.JFrame {
         BtnSalvar = new javax.swing.JButton();
         BtnPesquisar = new javax.swing.JButton();
         BtnExcluir = new javax.swing.JButton();
+        BtnLimpar = new javax.swing.JButton();
+        BtnBuscarId = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txt_Placa = new javax.swing.JTextField();
         fundo = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PROParking - Locação");
@@ -96,12 +117,12 @@ public class LocacaoTela extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Saída:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 53, 28));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 53, 28));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Vaga:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 53, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 53, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
@@ -115,8 +136,8 @@ public class LocacaoTela extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txt_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 156, -1));
-        jPanel1.add(txt_Saida, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 156, -1));
-        jPanel1.add(txt_Vaga, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 156, -1));
+        jPanel1.add(txt_Saida, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 156, -1));
+        jPanel1.add(txt_Vaga, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 156, -1));
         jPanel1.add(txt_Cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 156, -1));
 
         txt_Entrada.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +154,7 @@ public class LocacaoTela extends javax.swing.JFrame {
                 BtnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 66, 62));
+        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 66, 62));
 
         BtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pesquisar.png"))); // NOI18N
         BtnPesquisar.setContentAreaFilled(false);
@@ -142,7 +163,7 @@ public class LocacaoTela extends javax.swing.JFrame {
                 BtnPesquisarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 70, 62));
+        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 70, 62));
 
         BtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir.png"))); // NOI18N
         BtnExcluir.setBorderPainted(false);
@@ -152,62 +173,117 @@ public class LocacaoTela extends javax.swing.JFrame {
                 BtnExcluirActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 67, 65));
+        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 67, 65));
+
+        BtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/novo.png"))); // NOI18N
+        BtnLimpar.setBorder(null);
+        BtnLimpar.setBorderPainted(false);
+        BtnLimpar.setContentAreaFilled(false);
+        BtnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimparActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 80, 70));
+
+        BtnBuscarId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/renomear.png"))); // NOI18N
+        BtnBuscarId.setBorder(null);
+        BtnBuscarId.setBorderPainted(false);
+        BtnBuscarId.setContentAreaFilled(false);
+        BtnBuscarId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarIdActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel5.setText("Placa:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 53, 30));
+        jPanel1.add(txt_Placa, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 156, -1));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/148250_Queue_Assist-1024x576.jpg"))); // NOI18N
-        jPanel1.add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-170, 0, 1090, -1));
+        jPanel1.add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 700, 470));
+
+        jPanel4.setBackground(new java.awt.Color(0, 255, 204));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setText("SALVAR               PESQUISAR CPF               EXCLUIR               LIMPAR               PESQUISAR ID");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 560, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(671, 363));
+        setSize(new java.awt.Dimension(661, 390));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
         
-        
-                
             
-Boolean encontrou = false;
-        Integer posicaoachou = 0;
+            
+            
+            Atualizar();
+        
+        if (txt_Cpf.getText().isEmpty()) {
 
-        for (Locacao lista1 : lista)
-        {
-            if (txt_Cpf.getText().equals(lista1.getCpf()))
-            {
-                encontrou = true;
+            Boolean encontrou = false;
+            Integer posicaoachou = 0;
 
-                txt_Vaga.setText(lista1.getVaga().toString());
-                txt_Entrada.setText(lista1.getEntrada().toString());
-                txt_Id.setText(lista1.getId().toString());
-                txt_Saida.setText(lista1.getSaida().toString());
-                break;
+            for (Locacao lista1 : lista) {
+                if (txt_Cpf.getText().equals(lista1.getCpf())) {
+                    encontrou = true;
+
+                    JOptionPane.showMessageDialog(null, "Exibindo Locações, um momento!");
+
+                    txt_Placa.setText(lista1.getPlaca());
+                    txt_Cpf.setText(lista1.getCpf().toString());
+                    txt_Id.setText(lista1.getId().toString());
+                    txt_Entrada.setText(lista1.getEntrada().toString());
+                    txt_Saida.setText(lista1.getSaida().toString());
+                    txt_Vaga.setText(lista1.getVaga().toString());
+                    
+                    
+
+                    break;
+                }
+
             }
- 
-        }
 
-        if (encontrou == false)
-        {
-            JOptionPane.showMessageDialog(null, "Locação ainda não cadastrada!");
+            if (encontrou == false) {
+                JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
+            }
+
+        } else {
+            String cpf = txt_Cpf.getText();
+            LocacaoListar locatela;
+            locatela = new LocacaoListar(cpf);
+            locatela.setVisible(true);
+            locatela.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
             
-        
     }//GEN-LAST:event_BtnPesquisarActionPerformed
 
     private void BtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalvarActionPerformed
         {
-
+            Atualizar();
+            
             Locacao locacao = new Locacao();
             Vaga vaga = new Vaga();
 
@@ -221,6 +297,7 @@ Boolean encontrou = false;
                 Timestamp Entrada = new Timestamp(System.currentTimeMillis());
                 locacao.setCpf(txt_Cpf.getText());
                 locacao.setVaga(Integer.parseInt(txt_Vaga.getText()));
+                locacao.setPlaca(txt_Placa.getText());
                 locacao.setEntrada(Entrada);
 
                 vaga.setStatus(Boolean.parseBoolean("1"));
@@ -238,6 +315,7 @@ Boolean encontrou = false;
                     txt_Saida.setText("");
                     txt_Cpf.setText("");
                     txt_Entrada.setText("");
+                    txt_Placa.setText("");
                 }
                 else
                 {
@@ -254,6 +332,8 @@ Boolean encontrou = false;
     }//GEN-LAST:event_txt_IdActionPerformed
 
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
+        Atualizar();
+        
         if (txt_Cpf.getText().isEmpty()==false)
         {      
             //instanciando a classe de acesso a dados JogadorDAO       
@@ -270,7 +350,8 @@ Boolean encontrou = false;
             {
                 JOptionPane.showMessageDialog(rootPane,"Erro ao excluir!");
             }
-            lista = dao.listar();
+            String cpf = null;
+            lista = dao.listarporcpf(cpf);
             Limpar();
         }
         
@@ -283,6 +364,52 @@ Boolean encontrou = false;
     private void txt_EntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EntradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_EntradaActionPerformed
+
+    private void BtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimparActionPerformed
+        Limpar();
+        JOptionPane.showMessageDialog(rootPane, "A tela foi limpa com sucesso!");
+    }//GEN-LAST:event_BtnLimparActionPerformed
+
+    private void BtnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarIdActionPerformed
+        Atualizar();
+        
+        if (! txt_Id.getText().isEmpty()) {
+
+            Boolean encontrou = false;
+            Integer posicaoachou = 0;
+             
+            for (Locacao lista2 : lista) {
+                
+                if (Integer.parseInt(txt_Id.getText()) == lista2.getId()) {
+                    encontrou = true;
+
+                    Limpar();
+                    JOptionPane.showMessageDialog(null, "Exibindo automóvel, um momento!");
+
+                    
+                    
+                    txt_Placa.setText(lista2.getPlaca());
+                    txt_Cpf.setText(lista2.getCpf().toString());
+                    txt_Id.setText(lista2.getId().toString());
+                    txt_Vaga.setText(lista2.getVaga().toString());
+                    txt_Entrada.setText(lista2.getEntrada().toString());
+                    if(lista2.getSaida() != null){
+                    txt_Saida.setText(lista2.getSaida().toString());
+                    }
+                    
+
+
+                    break;
+                }
+
+            }
+
+            if (encontrou == false) {
+                JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
+            }
+
+        }
+    }//GEN-LAST:event_BtnBuscarIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,7 +447,9 @@ Boolean encontrou = false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnBuscarId;
     private javax.swing.JButton BtnExcluir;
+    private javax.swing.JButton BtnLimpar;
     private javax.swing.JButton BtnPesquisar;
     private javax.swing.JButton BtnSalvar;
     private javax.swing.JLabel fundo;
@@ -328,11 +457,15 @@ Boolean encontrou = false;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField txt_Cpf;
     private javax.swing.JTextField txt_Entrada;
     private javax.swing.JTextField txt_Id;
+    private javax.swing.JTextField txt_Placa;
     private javax.swing.JTextField txt_Saida;
     private javax.swing.JTextField txt_Vaga;
     // End of variables declaration//GEN-END:variables

@@ -52,7 +52,6 @@ public class AutomovelDAO {
         
         return retorno;
     }
-    
     public List<Automovel> listar()
     {
         List <Automovel> lista = new ArrayList<Automovel>();
@@ -62,6 +61,69 @@ public class AutomovelDAO {
         try 
         { 
             //Executo o sql e jogo em um resultset
+            
+            ResultSet res = pst.executeQuery();
+            //Enquanto tiver registro eu vou relacionar com minha classe Jogador e adicionar na lista
+            while (res.next())
+            {
+                Automovel automovel = new Automovel();
+                automovel.setPlaca(res.getString("placa"));
+                automovel.setCpf(res.getString("cpf"));
+                automovel.setModelo(res.getString("modelo"));
+                automovel.setCor(res.getString("cor"));
+                automovel.setAno(res.getInt("ano"));
+                automovel.setId(res.getInt("id"));
+                lista.add(automovel);
+            }
+        }
+        
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(AutomovelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    public List<Automovel> listarporid(Integer id)
+    {
+        List <Automovel> lista = new ArrayList<Automovel>();
+        String sql = "SELECT * FROM automovel where id = ?";
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        
+        try 
+        { 
+            //Executo o sql e jogo em um resultset
+            pst.setInt(1, id);
+            ResultSet res = pst.executeQuery();
+            //Enquanto tiver registro eu vou relacionar com minha classe Jogador e adicionar na lista
+            while (res.next())
+            {
+                Automovel automovel = new Automovel();
+                automovel.setPlaca(res.getString("placa"));
+                automovel.setCpf(res.getString("cpf"));
+                automovel.setModelo(res.getString("modelo"));
+                automovel.setCor(res.getString("cor"));
+                automovel.setAno(res.getInt("ano"));
+                automovel.setId(res.getInt("id"));
+                lista.add(automovel);
+            }
+        }
+        
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(AutomovelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    public List<Automovel> listarporcpf(String cpf)
+    {
+        List <Automovel> lista = new ArrayList<Automovel>();
+        String sql = "SELECT * FROM automovel where cpf = ?";
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        
+        try 
+        { 
+            //Executo o sql e jogo em um resultset
+            pst.setString(1, cpf);
             ResultSet res = pst.executeQuery();
             //Enquanto tiver registro eu vou relacionar com minha classe Jogador e adicionar na lista
             while (res.next())

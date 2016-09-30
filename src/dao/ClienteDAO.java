@@ -62,7 +62,7 @@ public class ClienteDAO {
                 
                 Cliente cliente = new Cliente();
                 
-                //cliente.setBonusacumulado(res.getDouble("bonus"));
+                cliente.setBonusacumulado(res.getDouble("bonusacumulado"));
                 cliente.setCpf(res.getString("cpf"));
                 cliente.setId(res.getInt("id"));
                 cliente.setNome(res.getString("nome"));

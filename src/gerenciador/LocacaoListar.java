@@ -1,34 +1,39 @@
 package gerenciador;
-    import dao.AutomovelDAO;
-    import java.util.ArrayList;
-    import java.util.List;
-    import javax.swing.table.DefaultTableModel;
-    import modelo.Automovel;
-public class automovelListar extends javax.swing.JFrame {
 
-    public automovelListar(String cpf) {
+import dao.AutomovelDAO;
+import dao.LocacaoDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import modelo.Automovel;
+import modelo.Locacao;
+
+public class LocacaoListar extends javax.swing.JFrame {
+
+    public LocacaoListar(String cpf) {
         
         initComponents();
-        AutomovelDAO dao = new AutomovelDAO();
-        List<Automovel> lista = dao.listarporcpf(cpf);
+        LocacaoDAO dao = new LocacaoDAO();
+        List<Locacao> lista = dao.listarporcpf(cpf);
         
         DefaultTableModel modelo = (DefaultTableModel)tabelaJogador.getModel();
                 
         Object[] linha = new Object [modelo.getColumnCount()]; //tamanho do array
 
-        for (Automovel automovel : lista) 
+        for (Locacao automovel : lista) 
         {
             linha[0] = automovel.getId(); //linha da coluna 0
             linha[1] = automovel.getCpf(); //linha da coluna 1
             linha[2] = automovel.getPlaca();
-            linha[3] = automovel.getModelo();
-            linha[4] = automovel.getCor();
-            linha[5] = automovel.getAno();
+            linha[3] = automovel.getVaga();
+            linha[4] = automovel.getEntrada();
+            linha[5] = automovel.getSaida();
             
                     
                     
             modelo.addRow(linha);
     }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -49,7 +54,7 @@ public class automovelListar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "CPF", "Placa", "Modelo", "Cor", "Ano"
+                "Id", "CPF", "Placa", "Vaga", "Entrada", "Saída"
             }
         ) {
             Class[] types = new Class [] {
@@ -84,7 +89,7 @@ public class automovelListar extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnGerenJogador.setText("Gerenciar Jogador");
+        btnGerenJogador.setText("Gerenciar Locação");
         btnGerenJogador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGerenJogadorActionPerformed(evt);
@@ -118,9 +123,9 @@ public class automovelListar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGerenJogadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenJogadorActionPerformed
-        //        jogadorManter tela = new jogadorManter();
-        //        tela.setVisible(true);
-        //        tela.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        jogadorManter tela = new jogadorManter();
+//        tela.setVisible(true);
+//        tela.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnGerenJogadorActionPerformed
 
     public static void main(String args[]) {
@@ -137,20 +142,26 @@ public class automovelListar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(automovelListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LocacaoListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(automovelListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LocacaoListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(automovelListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LocacaoListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(automovelListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LocacaoListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new automovelListar("").setVisible(true);
+                new LocacaoListar("").setVisible(true);
             }
         });
     }

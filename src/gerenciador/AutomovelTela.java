@@ -10,6 +10,7 @@ import dao.AutomovelDAO;
 import java.util.List;
 import javax.swing.ImageIcon;
 import modelo.Automovel;
+
 /**
  *
  * @author KillerCoffeBR
@@ -19,11 +20,11 @@ public class AutomovelTela extends javax.swing.JFrame {
     /**
      * Creates new form Automovel
      */
-        private List<Automovel> lista;
-        Integer posicao; 
-        
-        public void Limpar ()
-    {
+    private List<Automovel> lista;
+    private List<Automovel> lista2;
+    Integer posicao;
+
+    public void Limpar() {
         txt_Ano.setText("");
         txt_Cor.setText("");
         txt_Cpf.setText("");
@@ -31,17 +32,23 @@ public class AutomovelTela extends javax.swing.JFrame {
         txt_Modelo.setText("");
         txt_Placa.setText("");
     }
-        
+
+    public void Atualizar() {
+        AutomovelDAO dao = new AutomovelDAO();
+
+        lista = dao.listar();
+        lista2 = dao.listar();
+        posicao = 0;
+    }
+    
     public AutomovelTela() {
-        
+
         //Altera o icone no topo da janela
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/car.png")).getImage());
-        
+
         initComponents();
+
         
-        AutomovelDAO dao = new AutomovelDAO();
-        lista = dao.listar();
-        posicao = 0;
     }
 
     /**
@@ -57,6 +64,8 @@ public class AutomovelTela extends javax.swing.JFrame {
         BtnExcluir = new javax.swing.JButton();
         BtnPesquisar = new javax.swing.JButton();
         BtnSalvar = new javax.swing.JButton();
+        BtnLimpar = new javax.swing.JButton();
+        BtnBuscarId = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -70,6 +79,8 @@ public class AutomovelTela extends javax.swing.JFrame {
         txt_Ano = new javax.swing.JTextField();
         txt_Id = new javax.swing.JTextField();
         fundo = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PROParking - Automovel");
@@ -85,7 +96,7 @@ public class AutomovelTela extends javax.swing.JFrame {
                 BtnExcluirActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 80, 70));
+        jPanel1.add(BtnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 70, 70));
 
         BtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pesquisar.png"))); // NOI18N
         BtnPesquisar.setBorderPainted(false);
@@ -95,7 +106,7 @@ public class AutomovelTela extends javax.swing.JFrame {
                 BtnPesquisarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 70, 70));
+        jPanel1.add(BtnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 187, 70, -1));
 
         BtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/aceitar.png"))); // NOI18N
         BtnSalvar.setBorderPainted(false);
@@ -105,7 +116,29 @@ public class AutomovelTela extends javax.swing.JFrame {
                 BtnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 80, 70));
+        jPanel1.add(BtnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 70, 70));
+
+        BtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/novo.png"))); // NOI18N
+        BtnLimpar.setBorder(null);
+        BtnLimpar.setBorderPainted(false);
+        BtnLimpar.setContentAreaFilled(false);
+        BtnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimparActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 80, 70));
+
+        BtnBuscarId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/renomear.png"))); // NOI18N
+        BtnBuscarId.setBorder(null);
+        BtnBuscarId.setBorderPainted(false);
+        BtnBuscarId.setContentAreaFilled(false);
+        BtnBuscarId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarIdActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Klavika Regular", 0, 18)); // NOI18N
         jLabel1.setText("CPF:");
@@ -148,15 +181,40 @@ public class AutomovelTela extends javax.swing.JFrame {
         fundo.setToolTipText("");
         jPanel1.add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 270));
 
+        jPanel4.setBackground(new java.awt.Color(0, 255, 204));
+
+        jLabel7.setText("SALVAR                    PESQUISAR CPF          EXCLUIR                    LIMPAR              PESQUISAR ID");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel7)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -172,12 +230,9 @@ public class AutomovelTela extends javax.swing.JFrame {
 
             Automovel automovel = new Automovel();
 
-            if (txt_Placa.getText().isEmpty() || txt_Cpf.getText().isEmpty() || txt_Modelo.getText().isEmpty() || txt_Cor.getText().isEmpty() || txt_Ano.getText().isEmpty())
-            {
+            if (txt_Placa.getText().isEmpty() || txt_Cpf.getText().isEmpty() || txt_Modelo.getText().isEmpty() || txt_Cor.getText().isEmpty() || txt_Ano.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "Preencher todos os campos!");
-            }
-            else
-            {
+            } else {
                 automovel.setCpf(txt_Cpf.getText());
                 automovel.setPlaca(txt_Placa.getText());
                 automovel.setModelo(txt_Modelo.getText());
@@ -187,8 +242,7 @@ public class AutomovelTela extends javax.swing.JFrame {
                 AutomovelDAO dao = new AutomovelDAO();
                 Boolean deucerto = dao.inserir(automovel);
 
-                if (deucerto == true)
-                {
+                if (deucerto == true) {
                     JOptionPane.showMessageDialog(rootPane, "Veículo cadastrado com sucesso");
                     txt_Ano.setText("");
                     txt_Cor.setText("");
@@ -196,83 +250,116 @@ public class AutomovelTela extends javax.swing.JFrame {
                     txt_Id.setText("");
                     txt_Modelo.setText("");
                     txt_Placa.setText("");
-                }
-                else
-                {
+                } else {
                     JOptionPane.showMessageDialog(rootPane, "Erro ao cadastrar Veículo!");
                 }
-                
-        }
+                Atualizar();
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnSalvarActionPerformed
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
+
+            Atualizar();
         
-        
-Boolean encontrou = false;
-        Integer posicaoachou = 0;
-        
-        if(posicaoachou >= 2){
-            JOptionPane.showMessageDialog(null, "Encontei mais de um veículo, deseja visualizar em uma nova janela?");
-        }
-        
-        for (Automovel lista1 : lista)
-        {
-            if (txt_Cpf.getText().equals(lista1.getCpf()))
-            {
-                encontrou = true;
-                
-                
-                
-                JOptionPane.showMessageDialog(null, "Exibindo automóvel, um momento!");
-                
-                txt_Placa.setText(lista1.getPlaca());
-                txt_Modelo.setText(lista1.getModelo());
-                txt_Cor.setText(lista1.getCor());
-                txt_Ano.setText(lista1.getAno().toString());
-                txt_Ano.setText(lista1.getAno().toString());
-                txt_Id.setText(lista1.getId().toString());
-                
-                
-                break;
+        if (txt_Cpf.getText().isEmpty()) {
+
+            Boolean encontrou = false;
+            Integer posicaoachou = 0;
+
+            for (Automovel lista1 : lista) {
+                if (txt_Cpf.getText().equals(lista1.getCpf())) {
+                    encontrou = true;
+
+                    JOptionPane.showMessageDialog(null, "Exibindo automóvel, um momento!");
+
+                    txt_Placa.setText(lista1.getPlaca());
+                    txt_Modelo.setText(lista1.getModelo());
+                    txt_Cor.setText(lista1.getCor());
+                    txt_Ano.setText(lista1.getAno().toString());
+                    txt_Ano.setText(lista1.getAno().toString());
+                    txt_Cpf.setText(lista1.getCpf().toString());
+                    txt_Id.setText(lista1.getId().toString());
+
+                    break;
+                }
+
             }
- 
+
+            if (encontrou == false) {
+                JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
+            }
+
+        } else {
+            String cpf = txt_Cpf.getText();
+            automovelListar autotela;
+            autotela = new automovelListar(cpf);
+            autotela.setVisible(true);
+            autotela.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }
 
-        if (encontrou == false)
-        {
-            JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
-        }
-        
     }//GEN-LAST:event_BtnPesquisarActionPerformed
-    
+
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
-        if (txt_Cpf.getText().isEmpty()==false)
-        {      
+        if (txt_Cpf.getText().isEmpty() == false) {
             //instanciando a classe de acesso a dados JogadorDAO       
             AutomovelDAO dao = new AutomovelDAO();
-            
+
             //chamo o inserir
             boolean deucerto = dao.remover(lista.get(posicao));
-            
-            if (deucerto == true)
-            {
-                JOptionPane.showMessageDialog(rootPane,"Excluído com sucesso!");
+
+            if (deucerto == true) {
+                JOptionPane.showMessageDialog(rootPane, "Excluído com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao excluir!");
             }
-            else 
-            {
-                JOptionPane.showMessageDialog(rootPane,"Erro ao excluir!");
-            }
-            lista = dao.listar();
+            String cpf = null;
+            lista = dao.listarporcpf(cpf);
             Limpar();
+        } else {
+
         }
-        
-        else
-        {
-            
-        }
+        Atualizar();
     }//GEN-LAST:event_BtnExcluirActionPerformed
+
+    private void BtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimparActionPerformed
+        Limpar();
+        JOptionPane.showMessageDialog(rootPane, "A tela foi limpa com sucesso!");
+    }//GEN-LAST:event_BtnLimparActionPerformed
+
+    private void BtnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarIdActionPerformed
+
+        if (! txt_Id.getText().isEmpty()) {
+
+            Boolean encontrou = false;
+            Integer posicaoachou = 0;
+
+            for (Automovel lista2 : lista) {
+                if (Integer.parseInt(txt_Id.getText()) == lista2.getId()) {
+                    encontrou = true;
+
+                    JOptionPane.showMessageDialog(null, "Exibindo automóvel, um momento!");
+
+                    txt_Placa.setText(lista2.getPlaca());
+                    txt_Modelo.setText(lista2.getModelo());
+                    txt_Cor.setText(lista2.getCor());
+                    txt_Ano.setText(lista2.getAno().toString());
+                    txt_Ano.setText(lista2.getAno().toString());
+                    txt_Cpf.setText(lista2.getCpf().toString());
+                    txt_Id.setText(lista2.getId().toString());
+
+                    break;
+                }
+
+            }
+
+            if (encontrou == false) {
+                JOptionPane.showMessageDialog(null, "Automovel ainda não cadastrado!");
+            }
+
+        }
+    }//GEN-LAST:event_BtnBuscarIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,7 +398,9 @@ Boolean encontrou = false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnBuscarId;
     private javax.swing.JButton BtnExcluir;
+    private javax.swing.JButton BtnLimpar;
     private javax.swing.JButton BtnPesquisar;
     private javax.swing.JButton BtnSalvar;
     private javax.swing.JLabel fundo;
@@ -321,7 +410,9 @@ Boolean encontrou = false;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField txt_Ano;
     private javax.swing.JTextField txt_Cor;
     private javax.swing.JTextField txt_Cpf;
